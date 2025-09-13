@@ -1,0 +1,14 @@
+.dropdown-box {
+    width: 0px;
+    height: 0px;
+    /* background-color: lightblue; */
+    margin-top: 10px;
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+  }
+  
+  .dropdown-box.expanded {
+    width: 100%; /* Max width when expanded */
+    height: 400px; /* Max height when expanded */
+    /* overflow-y: auto; */
+  }
+  
