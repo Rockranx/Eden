@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import i from "../images/images/avatar/i.jpg";
 import Loader from "./buttons&loaders/Loader";
 const Home = ({
-  ALHASH,
+  newBannersLoading,
   OPENHASH,
   banner2,
   banner3,
@@ -26,6 +26,23 @@ const Home = ({
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const [currentBanner, setCurrentBanner] = useState(banners[0]);
   const [currentBanner1, setCurrentBanner1] = useState("");
+  const [bannerLoading, setBannerLoading] = useState(true);
+  const [daysLoading, setDaysLoading] = useState(true);
+
+  useEffect(() => {
+    if (newBanners.length === 0) {
+      setBannerLoading(true);
+    } else {
+      setBannerLoading(false);
+    }
+  }, [newBanners]);
+  useEffect(() => {
+    if (daysTrending.length === 0) {
+      setDaysLoading(true);
+    } else {
+      setDaysLoading(false);
+    }
+  }, [daysTrending]);
   useEffect(() => {
     if (banners.length > 0) {
       const interval = setInterval(() => {
@@ -143,54 +160,71 @@ const Home = ({
               </div>
             </div>
 
-            <div className="row">
-              {newBanners.map((item, index) => {
-                return (
-                  <>
-                    {item.map((newItem, newIndex) => {
-                      // // console.log(newItem);
-                      return (
-                        <>
-                          <div
-                            className="col-xl-3 col-lg-6 col-md-6"
-                            key={newIndex}
-                          >
-                            <div className="card">
-                              <img
-                                className="img-fluid card-img-top"
-                                src={newItem.bannerImageUrl}
-                                alt=""
-                              />
-                              <div className="card-body mobycard">
-                                <div className="notable-drops-content-img"></div>
-                                <h4 className="card-title">
-                                  {newItem.collectionName}
-                                </h4>
+            {bannerLoading ? (
+              <>
+                <div
+                  style={{
+                    minHeight: "150px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Loader />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="row">
+                  {newBanners.map((item, index) => {
+                    return (
+                      <>
+                        {item.map((newItem, newIndex) => {
+                          // // console.log(newItem);
+                          return (
+                            <>
+                              <div
+                                className="col-xl-3 col-lg-6 col-md-6"
+                                key={newIndex}
+                              >
+                                <div className="card">
+                                  <img
+                                    className="img-fluid card-img-top"
+                                    src={newItem.bannerImageUrl}
+                                    alt=""
+                                  />
+                                  <div className="card-body mobycard">
+                                    <div className="notable-drops-content-img"></div>
+                                    <h4 className="card-title">
+                                      {newItem.collectionName}
+                                    </h4>
 
-                                <div>
-                                  <NavLink
-                                    to={`/collection/${newItem.collectionSlug}`}
-                                    style={{
-                                      display: "flex",
-                                      width: "90px",
-                                      alignItems: "center",
-                                      justifyContent: "space-evenly",
-                                    }}
-                                  >
-                                    Explore
-                                    <BsArrowRight />
-                                  </NavLink>
+                                    <div>
+                                      <NavLink
+                                        to={`/collection/${newItem.collectionSlug}`}
+                                        style={{
+                                          display: "flex",
+                                          width: "90px",
+                                          alignItems: "center",
+                                          justifyContent: "space-evenly",
+                                        }}
+                                      >
+                                        Explore
+                                        <BsArrowRight />
+                                      </NavLink>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </>
-                      );
-                    })}
-                  </>
-                );
-              })}
-            </div>
+                            </>
+                          );
+                        })}
+                      </>
+                    );
+                  })}
+                </div>
+              </>
+            )}
           </div>
         </div>
         <br />
@@ -209,7 +243,20 @@ const Home = ({
             </div>
 
             <div className="row align-items-center">
-              {trendingisLoading ? (
+              {daysLoading ? (
+                <>
+                  <div
+                    style={{
+                      minHeight: "150px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Loader />
+                  </div>
+                </>
+              ) : (
                 <>
                   {daysTrending.map((jug, index) => {
                     // // console.log(data);
@@ -248,7 +295,6 @@ const Home = ({
                                           {`Floor Price:  ${data.floorPrice} ETH `}
                                         </p>
                                       </div>
-                                      
                                     </div>
                                   </div>
                                 </NavLink>
@@ -259,19 +305,6 @@ const Home = ({
                       </>
                     );
                   })}
-                </>
-              ) : (
-                <>
-                  <div
-                    style={{
-                      minHeight: "150px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Loader />
-                  </div>
                 </>
               )}
             </div>
@@ -341,9 +374,16 @@ const Home = ({
                   })}
                 </>
               ) : (
-                <>
+                <div
+                  style={{
+                    minHeight: "150px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Loader />
-                </>
+                </div>
               )}
             </div>
           </div>

@@ -44,10 +44,10 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
     async function fetchSpecificNftData() {
       setCurrentNftLoading(false);
       setCurrentNft([]);
-      const response1 = await fetchSpecificNftMetaData(
-        contractAddress,
-        tokenId
-      );
+      // const response1 = await fetchSpecificNftMetaData(
+      //   contractAddress,
+      //   tokenId
+      // );
       const response2 = await fetchNftOwner(contractAddress, tokenId);
       const response3 = await fetchTraits(contractAddress, tokenId);
       const response4 = await fetchNftActivity(contractAddress, tokenId);
@@ -62,7 +62,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
         setListingData(response5);
       }
 
-      setTraitsdetails(response1.raw.metadata.attributes);
+      // setTraitsdetails(response1.raw.metadata.attributes);
       // if (response1) {
       //   console.log(response1);
       // }
@@ -101,22 +101,26 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
     }
   }
   async function fetchNftOwner(contractAddress, tokenIds) {
-    const options = {
-      method: "GET",
-      headers: { accept: "application/json", "X-API-KEY": OPENHASH },
-    };
-
     try {
       const response = await fetch(
-        `/alchemy/nft/v3/${ALHASH}/getNFTMetadata?contractAddress=${contractAddress}&tokenId=${tokenIds}&refreshCache=false`,
-
-        options
+        `/api/specificNftMetadata?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        {
+          method: "GET",
+          headers: { accept: "application/json" },
+        }
       );
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Server error:", error);
+        return null;
+      }
+
       const data = await response.json();
+
       return data;
-      // console.log("data", data);
     } catch (error) {
-      // console.error(error);
+      console.error("Fetch error:", error);
       return null;
     }
   }
@@ -141,23 +145,26 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
     setIsOfferExpanded(!isOfferExpanded);
   };
   async function fetchTraits(contractAddress, tokenIds) {
-    const options = {
-      method: "GET",
-      headers: { accept: "application/json", "x-api-key": OPENHASH },
-    };
-
     try {
       const response = await fetch(
-        `https://api.opensea.io/api/v2/chain/ethereum/contract/${contractAddress}/nfts/${tokenIds}`,
-
-        options
+        `/api/nftTraits?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        {
+          method: "GET",
+          headers: { accept: "application/json" },
+        }
       );
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Server error:", error);
+        return null;
+      }
+
       const data = await response.json();
 
       return data.nft;
-      // console.log("opne sea", data);
     } catch (error) {
-      // console.error(error);
+      console.error("Fetch error:", error);
       return null;
     }
   }
@@ -182,42 +189,50 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
     }
   }
   async function fetchNftActivity(contractAddress, tokenIds) {
-    const options = {
-      method: "GET",
-      headers: { accept: "application/json", "x-api-key": OPENHASH },
-    };
-
     try {
       const response = await fetch(
-        `https://api.opensea.io/api/v2/events?chain=ethereum&contract_address=${contractAddress}&token_id=${tokenIds}&limit=100`,
-        options
+        `/api/nftActivity?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        {
+          method: "GET",
+          headers: { accept: "application/json" },
+        }
       );
-      const data = await response.json();
 
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Server error:", error);
+        return null;
+      }
+
+      const data = await response.json();
+      // console.log("data", data);
       return data.asset_events;
-      // console.log("activity data", data);
     } catch (error) {
-      // console.error(error);
+      console.error("Fetch error:", error);
       return null;
     }
   }
   async function fetchNftListingPrice(contractAddress, tokenIds) {
-    const options = {
-      method: "GET",
-      headers: { accept: "application/json", "x-api-key": OPENHASH },
-    };
-
     try {
       const response = await fetch(
-        `https://api.opensea.io/api/v2/orders/ethereum/seaport/listings?asset_contract_address=${contractAddress}&order_direction=asc&token_ids=${tokenIds}`,
-        options
+        `/api/nftListingPrice?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        {
+          method: "GET",
+          headers: { accept: "application/json" },
+        }
       );
-      const data = await response.json();
 
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Server error:", error);
+        return null;
+      }
+
+      const data = await response.json();
+      // console.log("data", data);
       return data.orders;
-      // console.log("listing data", data);
     } catch (error) {
-      // console.error(error);
+      console.error("Fetch error:", error);
       return null;
     }
   }

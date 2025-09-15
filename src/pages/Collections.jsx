@@ -18,7 +18,7 @@ const Collections = ({ API, HASH }) => {
   const web3 = new Web3(
     "https://mainnet.infura.io/v3/c892c2a72e3040c7b3f86e3078d51f6e"
   );
-
+console.log(collectionSlug)
   useEffect(() => {
     async function fetchNftCollectionData() {
       setNftCollectionLoading(false);
@@ -38,24 +38,29 @@ const Collections = ({ API, HASH }) => {
   }, [collectionSlug, currentPage]);
 
   async function fetchNftCollection(collectionSlug, page) {
-    const options = {
-      method: "GET",
-      headers: { accept: "application/json" },
-    };
+ 
+     try {
+    const response = await fetch(
+      `/api/collectionNfts?collectionSlug=${encodeURIComponent(collectionSlug)}&page=${page}`,
+      {
+        method: "GET",
+        headers: { accept: "application/json" },
+      }
+    );
 
-    try {
-      const response = await fetch(
-        `/alchemy/nft/v3/${API}/getNFTsForCollection?collectionSlug=${collectionSlug}&withMetadata=true&startToken=${
-          (page - 1) * 100
-        }&limit=100`,
-        options
-      );
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error fetching NFTs:", errorData);
       return null;
     }
+
+    const data = await response.json();
+    // console.log(data)/
+    return data;
+  } catch (error) {
+    console.error("Network error:", error);
+    return null;
+  }
   }
   useEffect(() => {
     async function fetchNftCollections() {

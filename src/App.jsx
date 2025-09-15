@@ -22,6 +22,7 @@ function App() {
   const [banners, setBanners] = useState([]);
   const [trendingData, setTrendingData] = useState([]);
   const [newBanners, setNewBanners] = useState([]);
+  const [newBannersLoading, setNewBannersLoading] = useState(false);
   const [daysTrending, setDaysTrending] = useState([]);
   const [bannerisLoading, setBannerisLoading] = useState(false);
   const [trendingisLoading, setTrendingisLoading] = useState(false);
@@ -129,8 +130,9 @@ function App() {
       ].flat();
       const selectedBanners = getRandomItems(allResponses, 4);
       const selectedBanners2 = getRandomItems(alltrendingResponses, 9);
-
+      setNewBannersLoading(true);
       setNewBanners([selectedBanners]);
+      setNewBannersLoading(false);
       setDaysTrending([selectedBanners2]);
     }
     runnner();
@@ -138,17 +140,18 @@ function App() {
   async function NotableDrops(DropsAddress) {
     const options = {
       method: "GET",
-      headers: { accept: "application/json", "X-API-KEY": OPENHASH },
+      headers: { accept: "application/json" },
     };
     try {
       const response = await fetch(
-        `/alchemy/nft/v3/${ALHASH}/getContractMetadata?contractAddress=${DropsAddress}`,
+        `/api/getContractMetadata?contractAddress=${DropsAddress}`,
         options
       );
       const data = await response.json();
       return data.openSeaMetadata;
     } catch (error) {
-      console.log("Error fetching data:", error);
+      // console.log("Error fetching data:", error);/
+      return null
     }
   }
 
@@ -177,12 +180,12 @@ function App() {
   async function TopBanner(topbanneraddress) {
     const options = {
       method: "GET",
-      headers: { accept: "application/json", "X-API-KEY": OPENHASH },
+      headers: { accept: "application/json" },
     };
     try {
       // deal with the chain issue
       const response = await fetch(
-        `/alchemy/nft/v3/${ALHASH}/getContractMetadata?contractAddress=${topbanneraddress}`,
+        `/api/getContractMetadata?contractAddress=${topbanneraddress}`,
         options
       );
       const data = await response.json();
@@ -247,7 +250,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `/alchemy/nft/v3/${ALHASH}/getNFTMetadata?contractAddress=${tokenAddress}&tokenId=${tokenIds}`,
+        `/api/specificNftMetadata?contractAddress=${tokenAddress}&tokenIds=${tokenIds}`,
         options
       );
       const data = await response.json();
@@ -278,6 +281,7 @@ function App() {
                 OPENHASH={OPENHASH}
                 ALHASH={ALHASH}
                 newBanners={newBanners}
+                newBannersLoading={newBannersLoading}
                 daysTrending={daysTrending}
               />
             }
