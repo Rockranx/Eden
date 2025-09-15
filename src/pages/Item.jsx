@@ -39,7 +39,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
   const [currentDateValue1, setCurrentDateValue1] = useState("");
   const [currentTimeValue2, setCurrentTimeValue2] = useState("");
 
-  // // console.log(contractAddress, tokenId);
+  // // // console.log(contractAddress, tokenId);
   useEffect(() => {
     async function fetchSpecificNftData() {
       setCurrentNftLoading(false);
@@ -64,23 +64,23 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
 
       // setTraitsdetails(response1.raw.metadata.attributes);
       // if (response1) {
-      //   console.log(response1);
+      //   // console.log(response1);
       // }
       setNftOwner([response2]);
       setCurrentNftLoading(true);
-      console.log(response5);
+      // console.log(response5);
     }
 
     fetchSpecificNftData();
   }, []);
-  // console.log(noNftsListings)
+  // // console.log(noNftsListings)
   let Pricey;
   let PriceValues;
 
   let nftconshort1 = contractAddress.slice(0, 5);
   let nftconshort2 = contractAddress.slice(38);
 
-  // // console.log(nftconshort1)
+  // // // console.log(nftconshort1)
 
   async function fetchSpecificNftMetaData(contractAddress, tokenIds) {
     const options = {
@@ -103,7 +103,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
   async function fetchNftOwner(contractAddress, tokenIds) {
     try {
       const response = await fetch(
-        `/api/specificNftMetadata?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        `${import.meta.env.VITE_API_URL}/specificNftMetadata?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
         {
           method: "GET",
           headers: { accept: "application/json" },
@@ -125,11 +125,11 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
     }
   }
 
-  // // console.log(nftsdetails)
+  // // // console.log(nftsdetails)
   function tuner() {
     setTraitstab(!traitstab);
   }
-  // // console.log(traitstab);
+  // // // console.log(traitstab);
 
   const handleBodyClick = () => {
     setIsExpanded(!isExpanded);
@@ -147,7 +147,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
   async function fetchTraits(contractAddress, tokenIds) {
     try {
       const response = await fetch(
-        `/api/nftTraits?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        `${import.meta.env.VITE_API_URL}/nftTraits?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
         {
           method: "GET",
           headers: { accept: "application/json" },
@@ -176,13 +176,13 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
 
     try {
       const response = await fetch(
-        `https://api.opensea.io/api/v2/listings/collection/${contractSlug}/nfts/${tokenIds}/best`,
+        `https://api.opensea.io${import.meta.env.VITE_API_URL}/v2/listings/collection/${contractSlug}/nfts/${tokenIds}/best`,
         options
       );
       const data = await response.json();
 
       return data.nft;
-      // console.log("opne sea", data);
+      // // console.log("opne sea", data);
     } catch (error) {
       // console.error(error);
       return null;
@@ -191,7 +191,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
   async function fetchNftActivity(contractAddress, tokenIds) {
     try {
       const response = await fetch(
-        `/api/nftActivity?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        `${import.meta.env.VITE_API_URL}/nftActivity?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
         {
           method: "GET",
           headers: { accept: "application/json" },
@@ -205,7 +205,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
       }
 
       const data = await response.json();
-      // console.log("data", data);
+      // // console.log("data", data);
       return data.asset_events;
     } catch (error) {
       console.error("Fetch error:", error);
@@ -215,7 +215,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
   async function fetchNftListingPrice(contractAddress, tokenIds) {
     try {
       const response = await fetch(
-        `/api/nftListingPrice?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
+        `${import.meta.env.VITE_API_URL}/nftListingPrice?contractAddress=${contractAddress}&tokenIds=${tokenIds}&refreshCache=false`,
         {
           method: "GET",
           headers: { accept: "application/json" },
@@ -229,7 +229,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
       }
 
       const data = await response.json();
-      // console.log("data", data);
+      // // console.log("data", data);
       return data.orders;
     } catch (error) {
       console.error("Fetch error:", error);
@@ -237,15 +237,15 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
     }
   }
 
-  // // console.log(currentNftDetails[0].owners);
+  // // // console.log(currentNftDetails[0].owners);
   return (
     <>
       <div className="home initDisplay" id="main-wrapper">
         {currentNftLoading ? (
           <>
             {currentNft.map((item, index) => {
-              // // console.log("thisis item", item);
-              // // console.log(item.raw.metadata.attributes);
+              // // // console.log("thisis item", item);
+              // // // console.log(item.raw.metadata.attributes);
 
               let deployer1 = currentNftDetails[0]?.owners[0]?.address.slice(
                 0,
@@ -404,7 +404,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
                                                       <tbody>
                                                         {listingData.map(
                                                           (data, indexes) => {
-                                                            // console.log(data);
+                                                            // // console.log(data);
                                                             const timestamp =
                                                               data.closing_date;
                                                             const date =
@@ -546,7 +546,7 @@ const Item = ({ API, OPENHASH, ALHASH }) => {
                                                 <ul className="splitdisplay">
                                                   {currentNftDetails.map(
                                                     (details, detailsindex) => {
-                                                      // // console.log(details);
+                                                      // // // console.log(details);
                                                       return (
                                                         <>
                                                           {details.traits.map(

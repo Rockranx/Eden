@@ -67,8 +67,8 @@ const Home = ({
       setOpen(false);
     }
   });
-  // console.log(daysTrending);
-  // // console.log(currentBanner.bannerImageUrl)
+  // // console.log(daysTrending);
+  // // // console.log(currentBanner.bannerImageUrl)
   return (
     <>
       <div className="home" id="main-wrapper">
@@ -180,7 +180,7 @@ const Home = ({
                     return (
                       <>
                         {item.map((newItem, newIndex) => {
-                          // // console.log(newItem);
+                          // // // console.log(newItem);
                           return (
                             <>
                               <div
@@ -259,11 +259,11 @@ const Home = ({
               ) : (
                 <>
                   {daysTrending.map((jug, index) => {
-                    // // console.log(data);
+                    // // // console.log(data);
                     return (
                       <>
                         {jug.map((data, inds) => {
-                          // console.log(jug);
+                          // // console.log(jug);
                           if (data) {
                             let directionName = jug.marketplace_collection_id;
 

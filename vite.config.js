@@ -11,8 +11,9 @@ export default defineConfig({
     
       "/api": {
         target: "https://api-7fandbxhsq-uc.a.run.app", 
+        // target: "http://localhost:5001", 
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+       
       },
     },
   },

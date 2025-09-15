@@ -144,14 +144,14 @@ function App() {
     };
     try {
       const response = await fetch(
-        `/api/getContractMetadata?contractAddress=${DropsAddress}`,
+        `${import.meta.env.VITE_API_URL}/getContractMetadata?contractAddress=${DropsAddress}`,
         options
       );
       const data = await response.json();
       return data.openSeaMetadata;
     } catch (error) {
-      // console.log("Error fetching data:", error);/
-      return null
+      // console.log("Error fetching data:", error);
+      // return null
     }
   }
 
@@ -185,16 +185,16 @@ function App() {
     try {
       // deal with the chain issue
       const response = await fetch(
-        `/api/getContractMetadata?contractAddress=${topbanneraddress}`,
+        `${import.meta.env.VITE_API_URL}/getContractMetadata?contractAddress=${topbanneraddress}`,
         options
       );
       const data = await response.json();
-      // console.log(data);
+      // // console.log(data);
       return data.openSeaMetadata;
       // setTrendingData(data.collections);
       // setTrendingisLoading(true);
     } catch (error) {
-      console.log("Error fetching data:", error);
+      // console.log("Error fetching data:", error);
     }
   }
 
@@ -250,11 +250,11 @@ function App() {
 
     try {
       const response = await fetch(
-        `/api/specificNftMetadata?contractAddress=${tokenAddress}&tokenIds=${tokenIds}`,
+        `${import.meta.env.VITE_API_URL}/specificNftMetadata?contractAddress=${tokenAddress}&tokenIds=${tokenIds}`,
         options
       );
       const data = await response.json();
-      // console.log(data)
+      // // console.log(data)
       return data;
     } catch (error) {
       console.error(error);

@@ -18,7 +18,7 @@ const Collections = ({ API, HASH }) => {
   const web3 = new Web3(
     "https://mainnet.infura.io/v3/c892c2a72e3040c7b3f86e3078d51f6e"
   );
-console.log(collectionSlug)
+// console.log(collectionSlug)
   useEffect(() => {
     async function fetchNftCollectionData() {
       setNftCollectionLoading(false);
@@ -41,7 +41,7 @@ console.log(collectionSlug)
  
      try {
     const response = await fetch(
-      `/api/collectionNfts?collectionSlug=${encodeURIComponent(collectionSlug)}&page=${page}`,
+      `${import.meta.env.VITE_API_URL}/collectionNfts?collectionSlug=${encodeURIComponent(collectionSlug)}&page=${page}`,
       {
         method: "GET",
         headers: { accept: "application/json" },
@@ -55,10 +55,10 @@ console.log(collectionSlug)
     }
 
     const data = await response.json();
-    // console.log(data)/
+    // // console.log(data)/
     return data;
   } catch (error) {
-    console.error("Network error:", error);
+    // console.error("Network error:", error);
     return null;
   }
   }
@@ -264,7 +264,7 @@ console.log(collectionSlug)
 
                             <div className="row">
                               {item.map((ith, indexs) => {
-                                console.log(ith);
+                                // console.log(ith);
                                 return (
                                   <>
                                     <div

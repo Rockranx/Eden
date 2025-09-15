@@ -36,7 +36,7 @@ const Explore = ({ userAddress, HASH }) => {
           })
           .catch((err) => console.error(err));
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     getter();
@@ -54,7 +54,7 @@ const Explore = ({ userAddress, HASH }) => {
           options
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setDisplayedArray(data.collections);
       } catch (error) {
         console.error("Error fetching data:", error);
