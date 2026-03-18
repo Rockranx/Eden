@@ -173,22 +173,6 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="col-xl-3 col-lg-3 col-md-5 col-sm-4">
-                <div className="bottom-widget">
-                  <h4 className="widget-title">About Us</h4>
-                  <ul>
-                    <li>
-                      <NavLink to="/explore">Explore</NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/collection">Collection</NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/connectwallet">Connect Wallet</NavLink>
-                    </li>
-                  </ul>
-                </div>
-              </div>
 
               <div className="col-xl-2 col-lg-2 col-md-8 col-sm-8">
                 <div className="bottom-widget">
