@@ -41,6 +41,7 @@ function App() {
   const ADDRESS3 = import.meta.env.VITE_HOME_CONTRACT3;
   const ADDRESS4 = import.meta.env.VITE_HOME_CONTRACT4;
   const ADDRESS5 = import.meta.env.VITE_HOME_CONTRACT5;
+  const ADDRESS6 = import.meta.env.VITE_HOME_CONTRACT6;
   const OPENHASH = import.meta.env.VITE_OPENSEA_HASH;
   const ALHASH = import.meta.env.VITE_ALCHEMY_API;
   const ADDRESS7 = import.meta.env.VITE_HOME_CONTRACT7;
@@ -49,7 +50,7 @@ function App() {
   const ADDRESS10 = import.meta.env.VITE_HOME_CONTRACT10;
   const ADDRESS11 = import.meta.env.VITE_HOME_CONTRACT11;
   const ADDRESS12 = import.meta.env.VITE_HOME_CONTRACT12;
-  const ADDRESS13 = import.meta.env.VITE_HOME_CONTRACT13;
+  const ADDRESS13 = import.meta.env.VITE_HOME_CONTRACT12;
 
   const TRENDINGADDRESS1 = import.meta.env.VITE_HOME_TRENDING1;
   const TRENDINGADDRESS2 = import.meta.env.VITE_HOME_TRENDING2;
@@ -75,18 +76,18 @@ function App() {
 
   useEffect(() => {
     async function runnner() {
-      const response1 = await NotableDrops(ADDRESS1);
-      const response2 = await NotableDrops(ADDRESS2);
-      const response3 = await NotableDrops(ADDRESS3);
-      const response4 = await NotableDrops(ADDRESS4);
-      const response5 = await NotableDrops(ADDRESS5);
-      const response6 = await NotableDrops(ADDRESS13);
-      const response7 = await NotableDrops(ADDRESS7);
-      const response8 = await NotableDrops(ADDRESS8);
-      const response9 = await NotableDrops(ADDRESS9);
-      const response10 = await NotableDrops(ADDRESS10);
-      const response11 = await NotableDrops(ADDRESS11);
-      const response12 = await NotableDrops(ADDRESS12);
+      const response1 = await TopBanner(ADDRESS1);
+      const response2 = await TopBanner(ADDRESS2);
+      const response3 = await TopBanner(ADDRESS3);
+      const response4 = await TopBanner(ADDRESS4);
+      const response5 = await TopBanner(ADDRESS5);
+      const response6 = await TopBanner(ADDRESS6);
+      const response7 = await TopBanner(ADDRESS7);
+      const response8 = await TopBanner(ADDRESS8);
+      const response9 = await TopBanner(ADDRESS9);
+      const response10 = await TopBanner(ADDRESS10);
+      const response11 = await TopBanner(ADDRESS11);
+      const response12 = await TopBanner(ADDRESS12);
       const trendingresponse1 = await NotableDrops(TRENDINGADDRESS1);
       const trendingresponse2 = await NotableDrops(TRENDINGADDRESS2);
       const trendingresponse3 = await NotableDrops(TRENDINGADDRESS3);
@@ -114,6 +115,7 @@ function App() {
         response11,
         response12,
       ].flat();
+      // console.log(allResponses)
       const alltrendingResponses = [
         trendingresponse1,
         trendingresponse2,
@@ -128,6 +130,7 @@ function App() {
         trendingresponse11,
         trendingresponse12,
       ].flat();
+        //  console.log(alltrendingResponses)
       const selectedBanners = getRandomItems(allResponses, 4);
       const selectedBanners2 = getRandomItems(alltrendingResponses, 9);
       setNewBannersLoading(true);
@@ -148,9 +151,10 @@ function App() {
         options
       );
       const data = await response.json();
+      // console.log(data)
       return data.openSeaMetadata;
     } catch (error) {
-      // console.log("Error fetching data:", error);
+      console.log("Error fetching data:", error);
       // return null
     }
   }
@@ -173,6 +177,7 @@ function App() {
       const response3 = await TopBanner(DISPLAY3);
       const response4 = await TopBanner(DISPLAY4);
       setBanners([response1, response2, response3, response4]);
+      console.log(banners)
       setBannerisLoading(true);
     }
     getTopBanner();
@@ -189,12 +194,12 @@ function App() {
         options
       );
       const data = await response.json();
-      // // console.log(data);
+      console.log(data);
       return data.openSeaMetadata;
       // setTrendingData(data.collections);
       // setTrendingisLoading(true);
     } catch (error) {
-      // console.log("Error fetching data:", error);
+      console.log("Error fetching data:", error);
     }
   }
 
@@ -254,7 +259,7 @@ function App() {
         options
       );
       const data = await response.json();
-      // // console.log(data)
+      console.log(data)
       return data;
     } catch (error) {
       console.error(error);
@@ -283,16 +288,6 @@ function App() {
                 newBanners={newBanners}
                 newBannersLoading={newBannersLoading}
                 daysTrending={daysTrending}
-              />
-            }
-          />
-          <Route
-            path="/explore"
-            element={
-              <Explore
-                userAddress={userAddress}
-                OPENHASH={OPENHASH}
-                ALHASH={ALHASH}
               />
             }
           />
